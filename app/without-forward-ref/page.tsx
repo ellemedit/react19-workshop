@@ -13,16 +13,26 @@ export default function WithoutForwardRef() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   return (
     <div className="m-4 p-4 border-2 border-gray-300 rounded-md inline-flex gap-2">
-      <LegacyInput
-        ref={inputRef}
+      <input
+        ref={(node) => {
+          if (node) {
+            // mount
+          } else {
+            // unmount
+          }
+          console.log("mount");
+          return () => {
+            console.log("unmount");
+          };
+        }}
         className="border-2 border-gray-300 rounded-md"
       />
-      <button
+      {/* <button
         onClick={() => inputRef.current?.focus()}
         className="border-2 border-gray-300 rounded-md px-2 bg-gray-200"
       >
         focus
-      </button>
+      </button> */}
     </div>
   );
 }

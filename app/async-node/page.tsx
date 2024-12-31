@@ -1,15 +1,14 @@
 "use client";
 
-import { Suspense } from "react";
+import { createContext, Suspense, use } from "react";
+
+let d = new Promise((resolve) => setTimeout(resolve, 3000)).then(() => 1);
+const c = createContext("test");
 
 export default function AsyncNode() {
-  return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        {new Promise((resolve) => setTimeout(resolve, 3000)).then(() => (
-          <div>Hello World</div>
-        ))}
-      </Suspense>
-    </div>
-  );
+  if (typeof window !== "undefined") {
+    return null;
+  }
+  const data = use(c);
+  return <div>{data}</div>;
 }
